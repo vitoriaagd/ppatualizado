@@ -12,7 +12,7 @@ criarconta.onclick = async function() {
     let data = { nome, email, senha };
 
     // Envia uma requisição POST para o servidor com os dados do usuário
-    const response = await fetch('http://localhost:3000/api/store/usuario', {
+    const response = await fetch('http://localhost:3001/api/store/usuario', {
         method: 'POST',
         headers: { 'Content-type': 'application/json;charset=UTF-8' }, // Define o tipo de conteúdo como JSON
         body: JSON.stringify(data) // Converte o objeto 'data' em uma string JSON

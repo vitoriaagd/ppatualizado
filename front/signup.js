@@ -13,7 +13,7 @@ document.getElementById('criarconta').addEventListener('click', async function(e
 
     // Faz uma requisição POST para o endpoint da API especificado.
     // Envia os dados do formulário no corpo da requisição no formato JSON.
-    const response = await fetch('http://localhost:3000/api/store/login', {
+    const response = await fetch('http://localhost:3001/api/store/login', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data),

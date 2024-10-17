@@ -20,7 +20,7 @@ botão_criar.addEventListener("click", async function(event) {
     
     let data = {title , conteudo}
     
-    const response = await fetch('http://localhost:3000/api/store/receitaCriar', {
+    const response = await fetch('http://localhost:3001/api/store/receitaCriar', {
         method: 'POST',
         headers: { 'Content-type': 'application/json;charset=UTF-8' }, // Define o tipo de conteúdo como JSON
         body: JSON.stringify(data) // Converte o objeto 'data' em uma string JSON
@@ -29,6 +29,7 @@ botão_criar.addEventListener("click", async function(event) {
     let content = await response.json();
     
     if (content.success) {
+        //de alguma forma subir junto com o id do usuario, pegar do html?
         const title = document.getElementById('recipe-title').value;
         const content = document.getElementById('recipe-content').value;
         
