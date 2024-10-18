@@ -28,23 +28,26 @@ async function storeUsuario(request, response) {
     });
 }
 
-
 async function login(request, response) {
     const params = [
         request.body.email,
         request.body.senha
-    ]
+    ];
 
-    const query = 'SELECT email, senha FROM cadastro WHERE email = ? AND senha = ?'
+    const query = 'SELECT * FROM cadastro WHERE email = ? AND senha = ?';
 
     connection.query(query, params, (err, results) => {
         if (results && results.length > 0) {
+            const userId = results[0].checkid; // Obter o ID do usuário
+            console.log(userId);
             response.status(201).json({
                 success: true,
                 message: "Sucesso!",
-                data: results
+                data: { 
+                    userId: userId, // Retorne o ID do usuário
+                    userInfo: results[0] // Outras informações do usuário, se necessário
+                }
             });
-           
         } else {
             response.status(400).json({
                 success: false,
@@ -54,7 +57,9 @@ async function login(request, response) {
         }
     });
 }
- 
+
+
+
 module.exports = {
     storeUsuario, 
     login

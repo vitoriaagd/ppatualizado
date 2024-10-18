@@ -7,29 +7,25 @@ toggleFormButton.addEventListener('click', () => {
     formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
 });
 
-
-const botão_criar = document.getElementById("b-criar")
+const botão_criar = document.getElementById("b-criar");
 
 botão_criar.addEventListener("click", async function(event) {
-    event.preventDefault()
-    
+    event.preventDefault();
     
     let title = document.getElementById("recipe-title").value;
     let conteudo = document.getElementById("recipe-content").value;
     
-    
-    let data = {title , conteudo}
+    let data = { title, conteudo };
     
     const response = await fetch('http://localhost:3001/api/store/receitaCriar', {
         method: 'POST',
-        headers: { 'Content-type': 'application/json;charset=UTF-8' }, // Define o tipo de conteúdo como JSON
-        body: JSON.stringify(data) // Converte o objeto 'data' em uma string JSON
+        headers: { 'Content-type': 'application/json;charset=UTF-8' },
+        body: JSON.stringify(data)
     });
     
     let content = await response.json();
     
     if (content.success) {
-        //de alguma forma subir junto com o id do usuario, pegar do html?
         const title = document.getElementById('recipe-title').value;
         const content = document.getElementById('recipe-content').value;
         
@@ -41,8 +37,28 @@ botão_criar.addEventListener("click", async function(event) {
         
         recipeForm.reset();
         formContainer.style.display = 'none';
-
     } else {
-        alert("deu merda")
+        alert("deu merda");
     }
-})
+});
+
+// Função para carregar receitas na inicialização da página
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        const response = await fetch('http://localhost:3001/api/receitas');
+        const content = await response.json();
+
+        if (content.success) {
+            content.data.forEach(receita => {
+                const feedItem = document.createElement('div');
+                feedItem.classList.add('feed-item');
+                feedItem.innerHTML = `<h3>${receita.title}</h3><p>${receita.desc_receita}</p>`;
+                feed.appendChild(feedItem);
+            });
+        } else {
+            console.error("Erro ao buscar receitas: ", content.message);
+        }
+    } catch (error) {
+        console.error("Erro ao fazer a requisição: ", error);
+    }
+});

@@ -2,24 +2,28 @@ const { Router } = require('express');
  
 const router = Router();
  
-const { pawbuddy } = require('../controller/receitasController');
+const { pawbuddy, getReceitas } = require('../controller/receitasController');
+//importar função nova do get
  
-router.post('/store/receitaCriar', pawbuddy);
- 
+
 /**
-* @swagger
-* /store/receitaCriar:
-*   get:
-*     summary: Cria a receita
-*     responses:
-*       200:
-*         description: Cria a receita no banco de dados
-*         content:
-*           application/json:
-*             schema:
-*               type: array
-*               items:
-*                 type: object
+ * @swagger
+ * /store/receitaCriar:
+ *   get:
+ *     summary: Cria a receita
+ *     responses:
+ *       200:
+ *         description: Cria a receita no banco de dados
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
 */
+router.post('/store/receitaCriar', pawbuddy);
+router.get('/getReceitas', getReceitas)
+
+//criar nova rota para o get
 
 module.exports = router;
