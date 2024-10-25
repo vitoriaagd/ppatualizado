@@ -39,7 +39,6 @@ async function login(request, response) {
     connection.query(query, params, (err, results) => {
         if (results && results.length > 0) {
             const userId = results[0].checkid; // Obter o ID do usuário
-            console.log(userId);
             response.status(201).json({
                 success: true,
                 message: "Sucesso!",

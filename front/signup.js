@@ -21,9 +21,11 @@ document.getElementById('criarconta').addEventListener('click', async function(e
 
     // Espera a resposta da requisição e a converte para JSON.
     let content = await response.json();
+    let id = content.data.userId
+    localStorage.setItem('userId', id)
 
     // Verifica se a resposta indica sucesso.
-    if (content.success) {
+    if (content.success) {        
         // Se for bem-sucedido, mostra uma mensagem de sucesso e redireciona para 'home.html'.
         alert("SUCESSO");
         window.location.href = "home.html";

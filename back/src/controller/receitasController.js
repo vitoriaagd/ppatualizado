@@ -5,9 +5,10 @@ async function pawbuddy(request, response) {
     const params = Array(
         request.body.title,
         request.body.conteudo,
+        request.body.userId
     );
-    //id está como 1, tem que buscar o id ao logar para popular a tabela com o id do user
-    const query = 'INSERT INTO receitas(title,desc_receita,user_id) VALUES(?,?,1)';
+    
+    const query = 'INSERT INTO receitas(title,desc_receita,user_id) VALUES(?,?,?)';
  
     connection.query(query, params, (err, results) => {
         if (results) {
@@ -35,7 +36,7 @@ async function getReceitas(request, response) {
         request.body.email,
         request.body.senha
     ];
-
+    //filtrar pelo ID do user e mostrar o nome do usuário referente ao ID dele na tabela
     const query = 'SELECT * FROM receitas';
 
     connection.query(query, params, (err, results) => {

@@ -14,8 +14,9 @@ botão_criar.addEventListener("click", async function(event) {
     
     let title = document.getElementById("recipe-title").value;
     let conteudo = document.getElementById("recipe-content").value;
+    let userId = localStorage.getItem('userId')
     
-    let data = { title, conteudo };
+    let data = { title, conteudo, userId };
     
     const response = await fetch('http://localhost:3001/api/store/receitaCriar', {
         method: 'POST',
