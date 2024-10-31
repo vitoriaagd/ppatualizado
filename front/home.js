@@ -27,39 +27,46 @@ botão_criar.addEventListener("click", async function(event) {
     let content = await response.json();
     
     if (content.success) {
-        const title = document.getElementById('recipe-title').value;
-        const content = document.getElementById('recipe-content').value;
-        
-        const feedItem = document.createElement('div');
-        feedItem.classList.add('feed-item');
-        feedItem.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
-        
-        feed.appendChild(feedItem);
-        
         recipeForm.reset();
-        formContainer.style.display = 'none';
     } else {
         alert("deu merda");
     }
 });
 
 // Função para carregar receitas na inicialização da página
-document.addEventListener('DOMContentLoaded', async function() {
-    try {
-        const response = await fetch('http://localhost:3001/api/receitas');
-        const content = await response.json();
+document.addEventListener('DOMContentLoaded', async function buscarReceitas(event) {
+    event.preventDefault()
 
-        if (content.success) {
-            content.data.forEach(receita => {
-                const feedItem = document.createElement('div');
-                feedItem.classList.add('feed-item');
-                feedItem.innerHTML = `<h3>${receita.title}</h3><p>${receita.desc_receita}</p>`;
-                feed.appendChild(feedItem);
-            });
-        } else {
-            console.error("Erro ao buscar receitas: ", content.message);
-        }
-    } catch (error) {
-        console.error("Erro ao fazer a requisição: ", error);
+    let user_id = localStorage.getItem('userId')
+
+    let response = await fetch("http://localhost:3001/api/getReceitas", {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json;charset=UTF-8' },
+        body: JSON.stringify({user_id})
+    })
+
+    let content = await response.json()
+
+    console.log(content)
+    if (content.success) {
+        console.log("deu bom")
+
+        content.data.forEach(function (receita) {
+            criarReceitas(receita)
+        })
+    } else {
+        console.log("deu merda")
     }
 });
+
+function criarReceitas(receita) {
+    let {title, desc_receita} = receita
+    
+    const feedItem = document.createElement('div');
+    feedItem.classList.add('feed-item');
+    feedItem.innerHTML = `<h3>${title}</h3><p>${desc_receita}</p>`;
+    
+    feed.appendChild(feedItem);
+    
+    formContainer.style.display = 'none';
+}

@@ -32,22 +32,18 @@ async function pawbuddy(request, response) {
 }
 
 async function getReceitas(request, response) {
-    const params = [
-        request.body.email,
-        request.body.senha
-    ];
+    const params = Array (
+        request.body.user_id
+    )
     //filtrar pelo ID do user e mostrar o nome do usuário referente ao ID dele na tabela
-    const query = 'SELECT * FROM receitas';
+    const query = 'SELECT * FROM receitas WHERE user_id = ?';
 
     connection.query(query, params, (err, results) => {
         if (results) {
             response.status(201).json({
                 success: true,
                 message: "Sucesso!",
-                data: { 
-                    userId: userId, // Retorne o ID do usuário
-                    userInfo: results[0] // Outras informações do usuário, se necessário
-                }
+                data: results
             });
         } else {
             response.status(400).json({

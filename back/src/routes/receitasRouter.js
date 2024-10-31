@@ -22,7 +22,7 @@ const { pawbuddy, getReceitas } = require('../controller/receitasController');
  *                 type: object
 */
 router.post('/store/receitaCriar', pawbuddy);
-router.get('/getReceitas', getReceitas)
+router.post('/getReceitas', getReceitas)
 
 //criar nova rota para o get
 
